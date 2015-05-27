@@ -31,9 +31,9 @@ desugarDo xs = foldr' foldFun (traverse ret) rest
 
 foldFun :: Stmt -> Exp -> Exp
 foldFun (Generator loc var fun) expr =
-  InfixApp (traverse fun) bind (Lambda loc [var] expr)
+  InfixApp fun bind (Lambda loc [var] expr)
 foldFun (Qualifier e1) e2 =
-  InfixApp (traverse e1) bind (Lambda noloc [PWildCard] e2)
+  InfixApp e1 bind (Lambda noloc [PWildCard] e2)
 foldFun (LetStmt bnds) e = Let (traverse bnds) e
 -- No idea how to desugar these arrow expressions.
 foldFun (RecStmt _stmts) _e = error "-XArrows not supported."
